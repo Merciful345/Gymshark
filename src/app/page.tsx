@@ -1,11 +1,13 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Footer from '@/components/Footer';
 import {
   Users, CreditCard, ClipboardList, Dumbbell, BarChart3,
-  ArrowRight, Zap, TrendingUp, Shield, Star,
+  ArrowRight, Zap, TrendingUp, Shield, Star, FlaskConical,
+  Building2, Phone, Mail, CheckCircle, Send,
 } from 'lucide-react';
 
 const features = [
@@ -25,6 +27,14 @@ const stats = [
 ];
 
 export default function HomePage() {
+  const [form, setForm] = useState({ gym: '', name: '', email: '', phone: '', plan: '' });
+  const [sent, setSent] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSent(true);
+  };
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#0d1117', color: '#f9fafb' }}>
 
@@ -37,13 +47,26 @@ export default function HomePage() {
           <a href="#features" className="hover:text-white transition-colors">Funciones</a>
           <a href="#planes" className="hover:text-white transition-colors">Planes</a>
           <a href="#stats" className="hover:text-white transition-colors">Métricas</a>
+          <a href="#solicitar" className="hover:text-white transition-colors">Solicitar acceso</a>
         </div>
         <Link href="/dashboard"
           className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all"
           style={{ backgroundColor: '#dc2626' }}>
-          Ir al Dashboard <ArrowRight size={15} />
+          Ver demo <ArrowRight size={15} />
         </Link>
       </nav>
+
+      {/* Demo notice bar */}
+      <div className="flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-mono"
+        style={{ backgroundColor: '#1a1200', borderBottom: '1px solid #f59e0b25' }}>
+        <FlaskConical size={13} style={{ color: '#f59e0b' }} />
+        <span style={{ color: '#f59e0b' }} className="font-semibold uppercase tracking-wider">Entorno de demostración</span>
+        <span className="hidden sm:inline" style={{ color: 'rgba(245,158,11,0.5)' }}>
+          — Los datos mostrados son de ejemplo. Para activar tu cuenta real,
+        </span>
+        <a href="#solicitar" className="hidden sm:inline font-semibold underline underline-offset-2"
+          style={{ color: '#f59e0b' }}>solicitá acceso acá.</a>
+      </div>
 
       {/* Hero */}
       <section className="max-w-7xl mx-auto px-8 pt-16 pb-24 text-center">
@@ -219,6 +242,145 @@ export default function HomePage() {
             <TrendingUp size={18} />
             Entrar al CRM demo
           </Link>
+        </div>
+      </section>
+
+      {/* Solicitar acceso */}
+      <section id="solicitar" className="py-24" style={{ backgroundColor: '#0d1117', borderTop: '1px solid #1f2937' }}>
+        <div className="max-w-6xl mx-auto px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+
+            {/* Left: info */}
+            <div>
+              <span className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full mb-6 uppercase tracking-widest"
+                style={{ backgroundColor: '#dc262615', color: '#dc2626', border: '1px solid #dc262630' }}>
+                <FlaskConical size={12} /> Demo activa
+              </span>
+              <h2 className="text-4xl font-extrabold text-white leading-tight mb-5">
+                ¿Querés activar<br />
+                <span style={{ color: '#dc2626' }}>tu cuenta real?</span>
+              </h2>
+              <p className="text-base leading-relaxed mb-8" style={{ color: '#9ca3af' }}>
+                Lo que estás viendo es una versión demo con datos de ejemplo. Si querés que activemos
+                GymShark CRM para tu gimnasio con tus datos reales, completá el formulario y nos contactamos.
+              </p>
+
+              <div className="space-y-4 mb-10">
+                {[
+                  'Carga inicial de todos tus socios',
+                  'Configuración de tus planes y precios',
+                  'Dominio propio en corelix.com.ar',
+                  'Soporte técnico incluido',
+                  'Panel listo en menos de 48 horas',
+                ].map(item => (
+                  <div key={item} className="flex items-center gap-3">
+                    <CheckCircle size={16} style={{ color: '#22c55e' }} className="flex-shrink-0" />
+                    <span className="text-sm" style={{ color: '#d1d5db' }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="p-5 rounded-2xl" style={{ backgroundColor: '#1f2937', border: '1px solid #374151' }}>
+                <p className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: '#6b7280' }}>Contacto directo</p>
+                <a href="mailto:e-aguirre@corelix.com.ar"
+                  className="flex items-center gap-2 text-sm font-medium mb-2"
+                  style={{ color: '#dc2626' }}>
+                  <Mail size={14} /> e-aguirre@corelix.com.ar
+                </a>
+                <p className="text-xs font-mono" style={{ color: '#4b5563' }}>my.corelix.com.ar</p>
+              </div>
+            </div>
+
+            {/* Right: form */}
+            <div className="p-8 rounded-3xl" style={{ backgroundColor: '#1f2937', border: '1px solid #374151' }}>
+              {sent ? (
+                <div className="text-center py-10">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5"
+                    style={{ backgroundColor: '#22c55e20' }}>
+                    <CheckCircle size={32} style={{ color: '#22c55e' }} />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">¡Solicitud enviada!</h3>
+                  <p className="text-sm" style={{ color: '#9ca3af' }}>
+                    Nos contactaremos con vos en las próximas 24 horas para activar tu cuenta.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div>
+                    <h3 className="text-lg font-bold text-white mb-1">Solicitar acceso</h3>
+                    <p className="text-xs" style={{ color: '#6b7280' }}>Completá el formulario y te activamos el sistema</p>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium mb-1.5" style={{ color: '#9ca3af' }}>
+                      <Building2 size={11} className="inline mr-1" />Nombre del gimnasio *
+                    </label>
+                    <input required type="text" placeholder="Ej: Iron Gym Palermo"
+                      value={form.gym} onChange={e => setForm({ ...form, gym: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl text-sm text-white outline-none transition-colors"
+                      style={{ backgroundColor: '#111827', border: '1px solid #374151' }} />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-medium mb-1.5" style={{ color: '#9ca3af' }}>
+                        <Users size={11} className="inline mr-1" />Tu nombre *
+                      </label>
+                      <input required type="text" placeholder="Juan García"
+                        value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
+                        className="w-full px-4 py-3 rounded-xl text-sm text-white outline-none"
+                        style={{ backgroundColor: '#111827', border: '1px solid #374151' }} />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium mb-1.5" style={{ color: '#9ca3af' }}>
+                        <Phone size={11} className="inline mr-1" />Teléfono *
+                      </label>
+                      <input required type="tel" placeholder="11-1234-5678"
+                        value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
+                        className="w-full px-4 py-3 rounded-xl text-sm text-white outline-none"
+                        style={{ backgroundColor: '#111827', border: '1px solid #374151' }} />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium mb-1.5" style={{ color: '#9ca3af' }}>
+                      <Mail size={11} className="inline mr-1" />Email *
+                    </label>
+                    <input required type="email" placeholder="juan@migimnasio.com"
+                      value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl text-sm text-white outline-none"
+                      style={{ backgroundColor: '#111827', border: '1px solid #374151' }} />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium mb-1.5" style={{ color: '#9ca3af' }}>
+                      Cantidad aproximada de socios
+                    </label>
+                    <select value={form.plan} onChange={e => setForm({ ...form, plan: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl text-sm text-white outline-none"
+                      style={{ backgroundColor: '#111827', border: '1px solid #374151' }}>
+                      <option value="">Seleccioná una opción</option>
+                      <option value="menos50">Menos de 50 socios</option>
+                      <option value="50-150">50 a 150 socios</option>
+                      <option value="150-300">150 a 300 socios</option>
+                      <option value="mas300">Más de 300 socios</option>
+                    </select>
+                  </div>
+
+                  <button type="submit"
+                    className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-white text-sm transition-all"
+                    style={{ backgroundColor: '#dc2626' }}>
+                    <Send size={15} />
+                    Solicitar activación de cuenta
+                  </button>
+
+                  <p className="text-xs text-center" style={{ color: '#4b5563' }}>
+                    Te respondemos en menos de 24 horas hábiles.
+                  </p>
+                </form>
+              )}
+            </div>
+          </div>
         </div>
       </section>
 
