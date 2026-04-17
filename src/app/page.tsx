@@ -287,6 +287,11 @@ export default function HomePage() {
                   style={{ color: '#dc2626' }}>
                   <Mail size={14} /> e-aguirre@corelix.com.ar
                 </a>
+                <a href="tel:+543814626095"
+                  className="flex items-center gap-2 text-sm font-medium mb-3"
+                  style={{ color: '#dc2626' }}>
+                  <Phone size={14} /> +54 381 462-6095
+                </a>
                 <p className="text-xs font-mono" style={{ color: '#4b5563' }}>my.corelix.com.ar</p>
               </div>
             </div>

@@ -131,7 +131,14 @@ export default function Footer() {
               </span>
               <Mail size={16} className="text-white group-hover:text-black group-hover:rotate-12 transition-all" />
             </a>
-            <p className="font-mono text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>
+            <a href="tel:+543814626095"
+              className="flex items-center gap-2 font-mono text-xs transition-colors"
+              style={{ color: 'rgba(255,255,255,0.2)' }}
+              onMouseEnter={e => (e.currentTarget.style.color = '#10b981')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.2)')}>
+              +54 381 462-6095
+            </a>
+            <p className="font-mono text-xs" style={{ color: 'rgba(255,255,255,0.15)' }}>
               my.corelix.com.ar
             </p>
           </div>
